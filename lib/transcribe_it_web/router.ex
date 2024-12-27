@@ -20,7 +20,7 @@ defmodule TranscribeItWeb.Router do
   scope "/", TranscribeItWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    # get "/", PageController, :home
   end
 
   # Other scopes may use custom stacks.
@@ -66,6 +66,7 @@ defmodule TranscribeItWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{TranscribeItWeb.UserAuth, :ensure_authenticated}] do
+      live "/", ThingLive
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end

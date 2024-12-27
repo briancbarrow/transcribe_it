@@ -1,0 +1,23 @@
+<.header>
+  Upload an audio file
+</.header>
+<div>
+  <.simple_form for={@form} id="audio-form" phx-submit="submit" phx-change="validate">
+    <div phx-drop-target={@uploads.audio.ref}>
+      <.label>Audio</.label>
+      <.live_file_input upload={@uploads.audio} />
+    </div>
+    <:actions>
+      <.button phx-disable-with="Getting transcription...">Transcribe</.button>
+    </:actions>
+  </.simple_form>
+
+  <%= for audio <- @uploads.audio.entries do %>
+    <progress value={audio.progress} max="100" />
+    <%= for err <- upload_errors(@uploads.audio, audio) do %>
+      <.error>{err}</.error>
+    <% end %>
+  <% end %>
+</div>
+
+<div :if={@transcript} class="mt-4">{@transcript}</div>
